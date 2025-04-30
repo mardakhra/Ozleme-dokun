@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Özlem'e Özel</title>
+  <style>
+    body {
+      margin: 0;
+      background: linear-gradient(to right, #f9c5d1, #9795f0);
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
+      height: 100vh;
+      position: relative;
+    }
+    .container {
+      text-align: center;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+    .heart {
+      font-size: 5rem;
+      color: red;
+      animation: pulse 1s infinite;
+      cursor: pointer;
+      user-select: none;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+    .floating-text {
+      position: absolute;
+      color: white;
+      font-size: 1.5rem;
+      animation: fadeOut 2s forwards;
+      pointer-events: none;
+    }
+    @keyframes fadeOut {
+      0% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(-50px); }
+    }
+    .game-button {
+      margin-top: 40px;
+      padding: 10px 20px;
+      font-size: 1.2rem;
+      background-color: #ffffffaa;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .game-button:hover {
+      background-color: #fff;
+    }
+    .game-area {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+    }
+    .question {
+      font-size: 1.5rem;
+      color: white;
+      margin-top: 20px;
+    }
+    .option {
+      margin: 10px;
+      padding: 10px 15px;
+      background-color: #ffffffaa;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .option:hover {
+      background-color: #fff;
+    }
+    .result {
+      display: none;
+      margin-top: 30px;
+    }
+    .result img {
+      max-width: 300px;
+      border-radius: 20px;
+      box-shadow: 0 0 10px white;
+    }
+    audio {
+      display: none;
+    }
+  </style>
+</head>
+<body onclick="spawnLove(event)">
+  <div class="container">
+    <div class="heart">❤️</div>
+    <button class="game-button" onclick="startGame(event)">Küçük Sürpriz</button>
+    <div class="game-area" id="gameArea">
+      <div class="question" id="question">Aşağıdakilerden hangisi en sevdiğimiz şey?</div>
+      <div class="option" onclick="answerQuestion(true)">Beraber kahve içmek</div>
+      <div class="option" onclick="answerQuestion(false)">Sinemaya gitmek</div>
+    </div>
+    <div class="result" id="result">
+      <p style="color:white; font-size:1.3rem">Doğru bildin! Sonsuza kadar seninle...</p>
+      <img src="2.jpg" alt="Bizim Resmimiz">
+    </div>
+  </div>
+  <audio id="loveSong" autoplay loop>
+    <source src="https://cdn.pixabay.com/audio/2022/08/11/audio_e962f40676.mp3" type="audio/mpeg">
+  </audio>
+  <script>
+    const messages = [
+      "Seni Seviyorum Özlem",
+      "Kalbimdesin",
+      "Aşkımızı sakladım senelerdir",
+      "Her şeyim sensin",
+      "İyi ki varsın",
+      "Sen benim mucizemsin"
+    ];
+
+    function spawnLove(e) {
+      const text = document.createElement("div");
+      text.className = "floating-text";
+      text.textContent = messages[Math.floor(Math.random() * messages.length)];
+      text.style.left = `${e.clientX}px`;
+      text.style.top = `${e.clientY}px`;
+      document.body.appendChild(text);
+      setTimeout(() => text.remove(), 2000);
+    }
+
+    function startGame(e) {
+      e.stopPropagation();
+      document.getElementById('gameArea').style.display = 'flex';
+    }
+
+    function answerQuestion(correct) {
+      if (correct) {
+        document.getElementById('result').style.display = 'block';
+      } else {
+        alert('Tekrar dene canım 😘');
+      }
+    }
+  </script>
+</body>
+</html>
